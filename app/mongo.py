@@ -6,6 +6,7 @@ def connect_mongo():
 
     return conn
 
+
 def save_mongo(database, collection, data):
     conn = connect_mongo()
     db = conn[database] 
@@ -21,8 +22,20 @@ def read_mongo(database, collection):
     conn = connect_mongo()
     db = conn[database] 
     data = db[collection].find()
-    
+
     return data
+
+
+def search_mongo(database, collection, value_field):
+    conn = connect_mongo()
+    db = conn[database] 
+    data = db[collection].find({'metadata.matchId': value_field})
+
+    if len(list(data)) != 0:
+        return True
+
+    return False
+
 
 def verify_exists(collection, data):
     if collection.count_documents(data) != 0:

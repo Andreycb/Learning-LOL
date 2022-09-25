@@ -44,6 +44,7 @@ def get_id_matches():
             for matche in matches:
                 save_mongo('LeagueOfLegends', 'IdMatches', build_to_json(matche))
 
+
 @click.command(help='')
 def run():
     get_id_matches()
