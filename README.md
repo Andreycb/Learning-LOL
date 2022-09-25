@@ -17,6 +17,6 @@ para fazer a classificação.
 O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:
 
 - [x] Adquirir dados historicos de partidas
-- [] Limpeza dos dados
-- [] Aplicação dos modelos de machine learning
+- [ ] Limpeza dos dados
+- [ ] Aplicação dos modelos de machine learning
 - [ ] Validação dos modelos
