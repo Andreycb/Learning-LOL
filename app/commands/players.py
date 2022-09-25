@@ -4,9 +4,10 @@ import json
 import os
 
 from datetime import datetime
+from time import sleep
 from app.log import logger
 from app.settings import API_KEY as api_key
-from time import sleep
+from app.mongo import save_mongo
 
 def verify_requests(url):
     status = requests.get(url).status_code
@@ -39,24 +40,9 @@ def get_dim_players(server, tier):
         url = f'https://{server}.api.riotgames.com/lol/summoner/v4/summoners/{summonerId}?api_key={api_key}'
 
         player_infos = verify_requests(url) 
-        player.update(player_infos)
-        data.append(player)
-    
-    build_dim_players(server, tier, data)
-
-def build_dim_players(server, tier, data):
-    json_file = {
-        'players' : data
-    }
-    
-    date = datetime.today().strftime('%Y-%m-%d')
-    path = f'C:\\Users\\Andrey-PC\\Desktop\\TCC\\datalake\\{tier}\\{server}\\{date}'
-
-    if not os.path.exists(path):
-        os.makedirs(path)
-
-    with open(f'{path}\\players.json', "w") as outfile:
-        json.dump(json_file, outfile)
+        player_infos['region'] = server
+        player_infos['dateInsert'] = datetime.today().strftime("%d/%m/%Y")
+        save_mongo('LeagueOfLegends', 'Players', player_infos)
 
 @click.command(help='')
 def run():
