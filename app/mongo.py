@@ -16,6 +16,14 @@ def save_mongo(database, collection, data):
 
     conn.close()
 
+
+def read_mongo(database, collection):
+    conn = connect_mongo()
+    db = conn[database] 
+    data = db[collection].find()
+    
+    return data
+
 def verify_exists(collection, data):
     if collection.count_documents(data) != 0:
         logger.info("Registro existe no banco")

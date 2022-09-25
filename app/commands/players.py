@@ -46,7 +46,7 @@ def get_dim_players(server, tier):
 
 @click.command(help='')
 def run():
-    server = 'kr'
+    server = 'br1'
     tier = 'challengerleagues'
     get_dim_players(server, tier)
 
