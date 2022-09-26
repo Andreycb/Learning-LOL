@@ -1,14 +1,7 @@
 import click 
-import requests
-import json
-import os
-
-
 
 from time import sleep
 from app.commands.players import verify_requests
-from datetime import datetime
-from app.log import logger
 from app.settings import API_KEY as api_key
 from app.mongo import read_mongo, save_mongo
 

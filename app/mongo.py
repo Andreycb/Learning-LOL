@@ -26,10 +26,10 @@ def read_mongo(database, collection):
     return data
 
 
-def search_mongo(database, collection, value_field):
+def search_mongo(database, collection, field, value_field):
     conn = connect_mongo()
     db = conn[database] 
-    data = db[collection].find({'metadata.matchId': value_field})
+    data = db[collection].find({field: value_field})
 
     if len(list(data)) != 0:
         return True
