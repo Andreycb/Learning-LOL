@@ -37,6 +37,14 @@ def search_mongo(database, collection, value_field):
     return False
 
 
+def distinct_mongo(database, collection, field):
+    conn = connect_mongo()
+    db = conn[database] 
+    data = db[collection].distinct(field)
+
+    return data
+
+
 def verify_exists(collection, data):
     if collection.count_documents(data) != 0:
         logger.info("Registro existe no banco")

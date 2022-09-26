@@ -9,7 +9,7 @@ from app.commands.players import verify_requests
 from datetime import datetime
 from app.log import logger
 from app.settings import API_KEY as api_key
-from app.mongo import read_mongo, save_mongo, search_mongo
+from app.mongo import distinct_mongo, read_mongo, save_mongo, search_mongo
 
 def define_region(server):
     if server == 'BR1':
@@ -27,8 +27,15 @@ def verify_exists():
     return False
 
 
+def define_data():
+    id = distinct_mongo('LeagueOfLegends', 'IdMatches', 'MatcheId')
+    matches = distinct_mongo('LeagueOfLegends', 'Matches', 'metadata.matchId')
+    data = list(set(id) - set(matches))
+ 
+    return data
+
 def get_matches():
-    data = read_mongo('LeagueOfLegends', 'IdMatches')
+    data = define_data()
 
     for matche in data:
         id = matche['MatcheId']
