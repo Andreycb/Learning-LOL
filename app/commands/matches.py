@@ -3,7 +3,7 @@ import click
 from time import sleep
 from app.commands.players import verify_requests
 from app.settings import API_KEY as api_key
-from app.mongo import read_mongo, save_mongo
+from app.mongo import read_mongo, save_mongo, delete_register
 
 def define_region(server):
     if server == 'br1':
@@ -36,6 +36,8 @@ def get_id_matches():
 
             for matche in matches:
                 save_mongo('LeagueOfLegends', 'IdMatches', build_to_json(matche))
+
+        delete_register('LeagueOfLegends', 'Players', player)
 
 
 @click.command(help='')

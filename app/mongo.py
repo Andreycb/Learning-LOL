@@ -11,10 +11,24 @@ def save_mongo(database, collection, data):
     conn = connect_mongo()
     db = conn[database] 
     col = db[collection]
-    if verify_exists(col, data) == False:
-        logger.info("Salvando no Banco")
-        col.insert_one(data)
 
+    if type(data) is list:
+        col.insert_many(data)
+        for i in data:
+            if verify_exists(col, i) == False:
+                logger.info("Salvando no Banco")
+                try:
+                    col.insert_one(data)
+                except:
+                    breakpoint()
+
+    if type(data) is dict:
+        if verify_exists(col, data) == False:
+            logger.info("Salvando no Banco")
+            try:
+                col.insert_one(data)
+            except:
+                breakpoint()
     conn.close()
 
 
@@ -51,3 +65,9 @@ def verify_exists(collection, data):
         return True
 
     return False
+
+def delete_register(database, collection, data):
+    logger.info(f"Deletando registro {data}")
+    conn = connect_mongo()
+    db = conn[database]
+    db[collection].delete_one(data)

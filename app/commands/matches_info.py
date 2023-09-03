@@ -26,17 +26,19 @@ def define_data():
 def get_matches():
     data = define_data()
     for id in data:
+        try:
+            # if search_mongo('LeagueOfLegends', 'Matches', 'metadata.matchId', str(id)):
+            #     logger.info("Essa partida ja está na base")
+            #     continue
 
-        if search_mongo('LeagueOfLegends', 'Matches', 'metadata.matchId', str(id)):
-            logger.info("Essa partida ja está na base")
+            server = re.search('[a-zA-Z]+', id).group()
+            region = define_region(server)
+
+            url = f'https://{region}.api.riotgames.com/lol/match/v5/matches/{id}?api_key={api_key}'
+            infos = verify_requests(url)
+            save_mongo('LeagueOfLegends', 'Matches', infos)
+        except:
             continue
-
-        server = re.search('[a-zA-Z]+', id).group()
-        region = define_region(server)
-
-        url = f'https://{region}.api.riotgames.com/lol/match/v5/matches/{id}?api_key={api_key}'
-        infos = verify_requests(url)
-        save_mongo('LeagueOfLegends', 'Matches', infos)
 
 
 @click.command(help='')
