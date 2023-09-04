@@ -42,11 +42,11 @@ def get_dim_players(server, tier):
         player_infos = verify_requests(url) 
         player_infos['region'] = server
         player_infos['dateInsert'] = datetime.today().strftime("%d/%m/%Y")
-        save_mongo('LeagueOfLegends', 'Players', player_infos)
+        save_mongo('LeagueOfLegends2', 'Players_NA', player_infos)
 
 @click.command(help='')
 def run():
-    server = 'br1'
+    server = 'na1'
     tier = 'challengerleagues'
     get_dim_players(server, tier)
 

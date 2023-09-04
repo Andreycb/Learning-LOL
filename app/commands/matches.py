@@ -6,7 +6,7 @@ from app.settings import API_KEY as api_key
 from app.mongo import read_mongo, save_mongo, delete_register
 
 def define_region(server):
-    if server == 'br1':
+    if server == 'br1' or server == 'na1':
         region = 'americas'
     if server == 'kr':
         region = 'asia'
@@ -20,7 +20,7 @@ def build_to_json(matche):
 
 
 def get_id_matches():
-    data = read_mongo('LeagueOfLegends', 'Players')
+    data = read_mongo('LeagueOfLegends2', 'Players_NA')
     for player in data:
         server = player['region']
         puuid = player['puuid']
@@ -35,9 +35,9 @@ def get_id_matches():
                 break
 
             for matche in matches:
-                save_mongo('LeagueOfLegends', 'IdMatches', build_to_json(matche))
+                save_mongo('LeagueOfLegends2', 'IdMatches_NA', build_to_json(matche))
 
-        delete_register('LeagueOfLegends', 'Players', player)
+        delete_register('LeagueOfLegends2', 'Players_NA', player)
 
 
 @click.command(help='')

@@ -43,7 +43,7 @@ def read_mongo(database, collection):
 def search_mongo(database, collection, field, value_field):
     conn = connect_mongo()
     db = conn[database] 
-    data = db[collection].find({field: value_field})
+    data = db[collection].find({field: value_field}, no_cursor_timeout=True)
 
     if len(list(data)) != 0:
         return True
